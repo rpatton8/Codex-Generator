@@ -1,0 +1,2076 @@
+import Part
+import Draft
+import FreeCAD as App
+from FreeCAD import Vector
+from FreeCAD import Base
+import BOPTools.JoinFeatures
+doc = App.newDocument()
+
+v1 = Vector(-8.2337, 50.1283, 0)
+v2 = Vector(-10.0415, 62.7010, 0)
+v3 = Vector(10.0415, 62.7010, 0)
+v4 = Vector(8.2337, 50.1283, 0)
+v5 = Vector(50.1283, 8.2337, 0)
+v6 = Vector(62.7010, 10.0415, 0)
+v7 = Vector(62.7010, -10.0415, 0)
+v8 = Vector(50.1283, -8.2337, 0)
+v9 = Vector(8.2337, -50.1283, 0)
+v10 = Vector(10.0415, -62.7010, 0)
+v11 = Vector(-10.0415, -62.7010, 0)
+v12 = Vector(-8.2337, -50.1283, 0)
+v13 = Vector(-50.1283, -8.2337, 0)
+v14 = Vector(-62.7010, -10.0415, 0)
+v15 = Vector(-62.7010, 10.0415, 0)
+v16 = Vector(-50.1283, 8.2337, 0)
+
+L1 = Part.LineSegment(v1, v2)
+L2 = Part.LineSegment(v3, v4)
+L3 = Part.LineSegment(v5, v6)
+L4 = Part.LineSegment(v7, v8)
+L5 = Part.LineSegment(v9, v10)
+L6 = Part.LineSegment(v11, v12)
+L7 = Part.LineSegment(v13, v14)
+L8 = Part.LineSegment(v15, v16)
+
+vc1 = Vector(0.0000, 63.5000, 0)
+vc2 = Vector(35.9210, 35.9210, 0)
+vc3 = Vector(63.5000, 0.0000, 0)
+vc4 = Vector(35.9210, -35.9210, 0)
+vc5 = Vector(0.0000, -63.5000, 0)
+vc6 = Vector(-35.9210, -35.9210, 0)
+vc7 = Vector(-63.5000, 0.0000, 0)
+vc8 = Vector(-35.9210, 35.9210, 0)
+
+C1 = Part.Arc(v2, vc1, v3)
+C2 = Part.Arc(v4, vc2, v5)
+C3 = Part.Arc(v6, vc3, v7)
+C4 = Part.Arc(v8, vc4, v9)
+C5 = Part.Arc(v10, vc5, v11)
+C6 = Part.Arc(v12, vc6, v13)
+C7 = Part.Arc(v14, vc7, v15)
+C8 = Part.Arc(v16, vc8, v1)
+
+S1 = Part.Shape([L1, C1, L2, C2, L3, C3, L4, C4, L5, C5, L6, C6, L7, C7, L8, C8])
+W1 = Part.Wire(S1.Edges)
+F1 = Part.Face(W1)
+P1 = F1.extrude(Vector(0, 0, 7.1120))
+Part.show(P1)
+
+v17 = Vector(-6.2226, 50.4175, 0)
+v18 = Vector(-7.7410, 60.9786, 0)
+v19 = Vector(7.7410, 60.9786, 0)
+v20 = Vector(6.2226, 50.4175, 0)
+
+L9 = Part.LineSegment(v17, v18)
+L10 = Part.LineSegment(v19, v20)
+
+vc9 = Vector(0.0000, 50.8000, 0)
+vc10 = Vector(0.0000, 61.4680, 0)
+
+C9 = Part.Arc(v17, vc9, v20)
+C10 = Part.Arc(v18, vc10, v19)
+
+S2 = Part.Shape([L9, C9, L10, C10])
+W2 = Part.Wire(S2.Edges)
+F2 = Part.Face(W2)
+P2 = F2.extrude(Vector(0, 0, 2.0320))
+Part.show(P2)
+
+App.activeDocument().addObject("Part::Cut","Cut1")
+App.activeDocument().Cut1.Base = App.activeDocument().Shape
+App.activeDocument().Cut1.Tool = App.activeDocument().Shape001
+App.ActiveDocument.recompute()
+
+v21 = Vector(50.4175, 6.2226, 0)
+v22 = Vector(60.9786, 7.7410, 0)
+v23 = Vector(60.9786, -7.7410, 0)
+v24 = Vector(50.4175, -6.2226, 0)
+
+L11 = Part.LineSegment(v21, v22)
+L12 = Part.LineSegment(v23, v24)
+
+vc11 = Vector(50.8000, 0.0000, 0)
+vc12 = Vector(61.4680, 0.0000, 0)
+
+C11 = Part.Arc(v21, vc11, v24)
+C12 = Part.Arc(v22, vc12, v23)
+
+S3 = Part.Shape([L11, C11, L12, C12])
+W3 = Part.Wire(S3.Edges)
+F3 = Part.Face(W3)
+P3 = F3.extrude(Vector(0, 0, 2.0320))
+Part.show(P3)
+
+App.activeDocument().addObject("Part::Cut","Cut2")
+App.activeDocument().Cut2.Base = App.activeDocument().Cut1
+App.activeDocument().Cut2.Tool = App.activeDocument().Shape002
+App.ActiveDocument.recompute()
+
+v25 = Vector(6.2226, -50.4175, 0)
+v26 = Vector(7.7410, -60.9786, 0)
+v27 = Vector(-7.7410, -60.9786, 0)
+v28 = Vector(-6.2226, -50.4175, 0)
+
+L13 = Part.LineSegment(v25, v26)
+L14 = Part.LineSegment(v27, v28)
+
+vc13 = Vector(0.0000, -50.8000, 0)
+vc14 = Vector(0.0000, -61.4680, 0)
+
+C13 = Part.Arc(v25, vc13, v28)
+C14 = Part.Arc(v26, vc14, v27)
+
+S4 = Part.Shape([L13, C13, L14, C14])
+W4 = Part.Wire(S4.Edges)
+F4 = Part.Face(W4)
+P4 = F4.extrude(Vector(0, 0, 2.0320))
+Part.show(P4)
+
+App.activeDocument().addObject("Part::Cut","Cut3")
+App.activeDocument().Cut3.Base = App.activeDocument().Cut2
+App.activeDocument().Cut3.Tool = App.activeDocument().Shape003
+App.ActiveDocument.recompute()
+
+v29 = Vector(-50.4175, -6.2226, 0)
+v30 = Vector(-60.9786, -7.7410, 0)
+v31 = Vector(-60.9786, 7.7410, 0)
+v32 = Vector(-50.4175, 6.2226, 0)
+
+L15 = Part.LineSegment(v29, v30)
+L16 = Part.LineSegment(v31, v32)
+
+vc15 = Vector(-50.8000, 0.0000, 0)
+vc16 = Vector(-61.4680, 0.0000, 0)
+
+C15 = Part.Arc(v29, vc15, v32)
+C16 = Part.Arc(v30, vc16, v31)
+
+S5 = Part.Shape([L15, C15, L16, C16])
+W5 = Part.Wire(S5.Edges)
+F5 = Part.Face(W5)
+P5 = F5.extrude(Vector(0, 0, 2.0320))
+Part.show(P5)
+
+App.activeDocument().addObject("Part::Cut","Cut4")
+App.activeDocument().Cut4.Base = App.activeDocument().Cut3
+App.activeDocument().Cut4.Tool = App.activeDocument().Shape004
+App.ActiveDocument.recompute()
+
+v33 = Vector(-6.2226, 50.4175, 5.0800)
+v34 = Vector(-7.7410, 60.9786, 5.0800)
+v35 = Vector(7.7410, 60.9786, 5.0800)
+v36 = Vector(6.2226, 50.4175, 5.0800)
+
+L17 = Part.LineSegment(v33, v34)
+L18 = Part.LineSegment(v35, v36)
+
+vc17 = Vector(0.0000, 50.8000, 5.0800)
+vc18 = Vector(0.0000, 61.4680, 5.0800)
+
+C17 = Part.Arc(v33, vc17, v36)
+C18 = Part.Arc(v34, vc18, v35)
+
+S6 = Part.Shape([L17, C17, L18, C18])
+W6 = Part.Wire(S6.Edges)
+F6 = Part.Face(W6)
+P6 = F6.extrude(Vector(0, 0, 2.0320))
+Part.show(P6)
+
+App.activeDocument().addObject("Part::Cut","Cut5")
+App.activeDocument().Cut5.Base = App.activeDocument().Cut4
+App.activeDocument().Cut5.Tool = App.activeDocument().Shape005
+App.ActiveDocument.recompute()
+
+v37 = Vector(50.4175, 6.2226, 5.0800)
+v38 = Vector(60.9786, 7.7410, 5.0800)
+v39 = Vector(60.9786, -7.7410, 5.0800)
+v40 = Vector(50.4175, -6.2226, 5.0800)
+
+L19 = Part.LineSegment(v37, v38)
+L20 = Part.LineSegment(v39, v40)
+
+vc19 = Vector(50.8000, 0.0000, 5.0800)
+vc20 = Vector(61.4680, 0.0000, 5.0800)
+
+C19 = Part.Arc(v37, vc19, v40)
+C20 = Part.Arc(v38, vc20, v39)
+
+S7 = Part.Shape([L19, C19, L20, C20])
+W7 = Part.Wire(S7.Edges)
+F7 = Part.Face(W7)
+P7 = F7.extrude(Vector(0, 0, 2.0320))
+Part.show(P7)
+
+App.activeDocument().addObject("Part::Cut","Cut6")
+App.activeDocument().Cut6.Base = App.activeDocument().Cut5
+App.activeDocument().Cut6.Tool = App.activeDocument().Shape006
+App.ActiveDocument.recompute()
+
+v41 = Vector(6.2226, -50.4175, 5.0800)
+v42 = Vector(7.7410, -60.9786, 5.0800)
+v43 = Vector(-7.7410, -60.9786, 5.0800)
+v44 = Vector(-6.2226, -50.4175, 5.0800)
+
+L21 = Part.LineSegment(v41, v42)
+L22 = Part.LineSegment(v43, v44)
+
+vc21 = Vector(0.0000, -50.8000, 5.0800)
+vc22 = Vector(0.0000, -61.4680, 5.0800)
+
+C21 = Part.Arc(v41, vc21, v44)
+C22 = Part.Arc(v42, vc22, v43)
+
+S8 = Part.Shape([L21, C21, L22, C22])
+W8 = Part.Wire(S8.Edges)
+F8 = Part.Face(W8)
+P8 = F8.extrude(Vector(0, 0, 2.0320))
+Part.show(P8)
+
+App.activeDocument().addObject("Part::Cut","Cut7")
+App.activeDocument().Cut7.Base = App.activeDocument().Cut6
+App.activeDocument().Cut7.Tool = App.activeDocument().Shape007
+App.ActiveDocument.recompute()
+
+v45 = Vector(-50.4175, -6.2226, 5.0800)
+v46 = Vector(-60.9786, -7.7410, 5.0800)
+v47 = Vector(-60.9786, 7.7410, 5.0800)
+v48 = Vector(-50.4175, 6.2226, 5.0800)
+
+L23 = Part.LineSegment(v45, v46)
+L24 = Part.LineSegment(v47, v48)
+
+vc23 = Vector(-50.8000, 0.0000, 5.0800)
+vc24 = Vector(-61.4680, 0.0000, 5.0800)
+
+C23 = Part.Arc(v45, vc23, v48)
+C24 = Part.Arc(v46, vc24, v47)
+
+S9 = Part.Shape([L23, C23, L24, C24])
+W9 = Part.Wire(S9.Edges)
+F9 = Part.Face(W9)
+P9 = F9.extrude(Vector(0, 0, 2.0320))
+Part.show(P9)
+
+App.activeDocument().addObject("Part::Cut","Cut8")
+App.activeDocument().Cut8.Base = App.activeDocument().Cut7
+App.activeDocument().Cut8.Tool = App.activeDocument().Shape008
+App.ActiveDocument.recompute()
+
+v49 = Vector(-4.4147, 37.8434, 5.0800)
+v50 = Vector(-5.9333, 48.4057, 5.0800)
+v51 = Vector(5.9333, 48.4057, 5.0800)
+v52 = Vector(4.4147, 37.8434, 5.0800)
+
+L25 = Part.LineSegment(v49, v50)
+L26 = Part.LineSegment(v51, v52)
+
+vc25 = Vector(0.0000, 38.1000, 5.0800)
+vc26 = Vector(0.0000, 48.7680, 5.0800)
+
+C25 = Part.Arc(v49, vc25, v52)
+C26 = Part.Arc(v50, vc26, v51)
+
+S10 = Part.Shape([L25, C25, L26, C26])
+W10 = Part.Wire(S10.Edges)
+F10 = Part.Face(W10)
+P10 = F10.extrude(Vector(0, 0, 2.0320))
+Part.show(P10)
+
+App.activeDocument().addObject("Part::Cut","Cut9")
+App.activeDocument().Cut9.Base = App.activeDocument().Cut8
+App.activeDocument().Cut9.Tool = App.activeDocument().Shape009
+App.ActiveDocument.recompute()
+
+v53 = Vector(-14.8976, 35.0667, 5.0800)
+v54 = Vector(-19.3304, 44.7733, 5.0800)
+v55 = Vector(-7.9445, 48.1166, 5.0800)
+v56 = Vector(-6.4258, 37.5542, 5.0800)
+
+L27 = Part.LineSegment(v53, v54)
+L28 = Part.LineSegment(v55, v56)
+
+vc27 = Vector(-10.7340, 36.5567, 5.0800)
+vc28 = Vector(-13.7395, 46.7926, 5.0800)
+
+C27 = Part.Arc(v53, vc27, v56)
+C28 = Part.Arc(v54, vc28, v55)
+
+S11 = Part.Shape([L27, C27, L28, C28])
+W11 = Part.Wire(S11.Edges)
+F11 = Part.Face(W11)
+P11 = F11.extrude(Vector(0, 0, 2.0320))
+Part.show(P11)
+
+App.activeDocument().addObject("Part::Cut","Cut10")
+App.activeDocument().Cut10.Base = App.activeDocument().Cut9
+App.activeDocument().Cut10.Tool = App.activeDocument().Shape010
+App.ActiveDocument.recompute()
+
+v57 = Vector(-24.1736, 29.4491, 5.0800)
+v58 = Vector(-31.1615, 37.5137, 5.0800)
+v59 = Vector(-21.1787, 43.9293, 5.0800)
+v60 = Vector(-16.7458, 34.2226, 5.0800)
+
+L29 = Part.LineSegment(v57, v58)
+L30 = Part.LineSegment(v59, v60)
+
+vc29 = Vector(-20.5984, 32.0518, 5.0800)
+vc30 = Vector(-26.3660, 41.0263, 5.0800)
+
+C29 = Part.Arc(v57, vc29, v60)
+C30 = Part.Arc(v58, vc30, v59)
+
+S12 = Part.Shape([L29, C29, L30, C30])
+W12 = Part.Wire(S12.Edges)
+F12 = Part.Face(W12)
+P12 = F12.extrude(Vector(0, 0, 2.0320))
+Part.show(P12)
+
+App.activeDocument().addObject("Part::Cut","Cut11")
+App.activeDocument().Cut11.Base = App.activeDocument().Cut10
+App.activeDocument().Cut11.Tool = App.activeDocument().Shape011
+App.ActiveDocument.recompute()
+
+v61 = Vector(-31.4911, 21.4457, 5.0800)
+v62 = Vector(-40.4681, 27.2149, 5.0800)
+v63 = Vector(-32.6971, 36.1831, 5.0800)
+v64 = Vector(-25.7091, 28.1186, 5.0800)
+
+L31 = Part.LineSegment(v61, v62)
+L32 = Part.LineSegment(v63, v64)
+
+vc31 = Vector(-28.7941, 24.9502, 5.0800)
+vc32 = Vector(-36.8564, 31.9362, 5.0800)
+
+C31 = Part.Arc(v61, vc31, v64)
+C32 = Part.Arc(v62, vc32, v63)
+
+S13 = Part.Shape([L31, C31, L32, C32])
+W13 = Part.Wire(S13.Edges)
+F13 = Part.Face(W13)
+P13 = F13.extrude(Vector(0, 0, 2.0320))
+Part.show(P13)
+
+App.activeDocument().addObject("Part::Cut","Cut12")
+App.activeDocument().Cut12.Base = App.activeDocument().Cut11
+App.activeDocument().Cut12.Tool = App.activeDocument().Shape012
+App.ActiveDocument.recompute()
+
+v65 = Vector(-36.2575, 11.7049, 5.0800)
+v66 = Vector(-46.4962, 14.7113, 5.0800)
+v67 = Vector(-41.5666, 25.5056, 5.0800)
+v68 = Vector(-32.5896, 19.7365, 5.0800)
+
+L33 = Part.LineSegment(v65, v66)
+L34 = Part.LineSegment(v67, v68)
+
+vc33 = Vector(-34.6570, 15.8273, 5.0800)
+vc34 = Vector(-44.3609, 20.2590, 5.0800)
+
+C33 = Part.Arc(v65, vc33, v68)
+C34 = Part.Arc(v66, vc34, v67)
+
+S14 = Part.Shape([L33, C33, L34, C34])
+W14 = Part.Wire(S14.Edges)
+F14 = Part.Face(W14)
+P14 = F14.extrude(Vector(0, 0, 2.0320))
+Part.show(P14)
+
+App.activeDocument().addObject("Part::Cut","Cut13")
+App.activeDocument().Cut13.Base = App.activeDocument().Cut12
+App.activeDocument().Cut13.Tool = App.activeDocument().Shape013
+App.ActiveDocument.recompute()
+
+v69 = Vector(-38.0865, 1.0159, 5.0800)
+v70 = Vector(-48.7574, 1.0159, 5.0800)
+v71 = Vector(-47.0686, 12.7618, 5.0800)
+v72 = Vector(-36.8299, 9.7555, 5.0800)
+
+L35 = Part.LineSegment(v69, v70)
+L36 = Part.LineSegment(v71, v72)
+
+vc35 = Vector(-37.7122, 5.4222, 5.0800)
+vc36 = Vector(-48.2716, 6.9404, 5.0800)
+
+C35 = Part.Arc(v69, vc35, v72)
+C36 = Part.Arc(v70, vc36, v71)
+
+S15 = Part.Shape([L35, C35, L36, C36])
+W15 = Part.Wire(S15.Edges)
+F15 = Part.Face(W15)
+P15 = F15.extrude(Vector(0, 0, 2.0320))
+Part.show(P15)
+
+App.activeDocument().addObject("Part::Cut","Cut14")
+App.activeDocument().Cut14.Base = App.activeDocument().Cut13
+App.activeDocument().Cut14.Tool = App.activeDocument().Shape014
+App.ActiveDocument.recompute()
+
+v73 = Vector(-36.8299, -9.7555, 5.0800)
+v74 = Vector(-47.0686, -12.7618, 5.0800)
+v75 = Vector(-48.7574, -1.0159, 5.0800)
+v76 = Vector(-38.0865, -1.0159, 5.0800)
+
+L37 = Part.LineSegment(v73, v74)
+L38 = Part.LineSegment(v75, v76)
+
+vc37 = Vector(-37.7122, -5.4222, 5.0800)
+vc38 = Vector(-48.2716, -6.9404, 5.0800)
+
+C37 = Part.Arc(v73, vc37, v76)
+C38 = Part.Arc(v74, vc38, v75)
+
+S16 = Part.Shape([L37, C37, L38, C38])
+W16 = Part.Wire(S16.Edges)
+F16 = Part.Face(W16)
+P16 = F16.extrude(Vector(0, 0, 2.0320))
+Part.show(P16)
+
+App.activeDocument().addObject("Part::Cut","Cut15")
+App.activeDocument().Cut15.Base = App.activeDocument().Cut14
+App.activeDocument().Cut15.Tool = App.activeDocument().Shape015
+App.ActiveDocument.recompute()
+
+v77 = Vector(-32.5896, -19.7365, 5.0800)
+v78 = Vector(-41.5666, -25.5056, 5.0800)
+v79 = Vector(-46.4962, -14.7113, 5.0800)
+v80 = Vector(-36.2575, -11.7049, 5.0800)
+
+L39 = Part.LineSegment(v77, v78)
+L40 = Part.LineSegment(v79, v80)
+
+vc39 = Vector(-34.6570, -15.8273, 5.0800)
+vc40 = Vector(-44.3609, -20.2590, 5.0800)
+
+C39 = Part.Arc(v77, vc39, v80)
+C40 = Part.Arc(v78, vc40, v79)
+
+S17 = Part.Shape([L39, C39, L40, C40])
+W17 = Part.Wire(S17.Edges)
+F17 = Part.Face(W17)
+P17 = F17.extrude(Vector(0, 0, 2.0320))
+Part.show(P17)
+
+App.activeDocument().addObject("Part::Cut","Cut16")
+App.activeDocument().Cut16.Base = App.activeDocument().Cut15
+App.activeDocument().Cut16.Tool = App.activeDocument().Shape016
+App.ActiveDocument.recompute()
+
+v81 = Vector(-25.7091, -28.1186, 5.0800)
+v82 = Vector(-32.6971, -36.1831, 5.0800)
+v83 = Vector(-40.4681, -27.2149, 5.0800)
+v84 = Vector(-31.4911, -21.4457, 5.0800)
+
+L41 = Part.LineSegment(v81, v82)
+L42 = Part.LineSegment(v83, v84)
+
+vc41 = Vector(-28.7941, -24.9502, 5.0800)
+vc42 = Vector(-36.8564, -31.9362, 5.0800)
+
+C41 = Part.Arc(v81, vc41, v84)
+C42 = Part.Arc(v82, vc42, v83)
+
+S18 = Part.Shape([L41, C41, L42, C42])
+W18 = Part.Wire(S18.Edges)
+F18 = Part.Face(W18)
+P18 = F18.extrude(Vector(0, 0, 2.0320))
+Part.show(P18)
+
+App.activeDocument().addObject("Part::Cut","Cut17")
+App.activeDocument().Cut17.Base = App.activeDocument().Cut16
+App.activeDocument().Cut17.Tool = App.activeDocument().Shape017
+App.ActiveDocument.recompute()
+
+v85 = Vector(-16.7458, -34.2226, 5.0800)
+v86 = Vector(-21.1787, -43.9293, 5.0800)
+v87 = Vector(-31.1615, -37.5137, 5.0800)
+v88 = Vector(-24.1736, -29.4491, 5.0800)
+
+L43 = Part.LineSegment(v85, v86)
+L44 = Part.LineSegment(v87, v88)
+
+vc43 = Vector(-20.5984, -32.0518, 5.0800)
+vc44 = Vector(-26.3660, -41.0263, 5.0800)
+
+C43 = Part.Arc(v85, vc43, v88)
+C44 = Part.Arc(v86, vc44, v87)
+
+S19 = Part.Shape([L43, C43, L44, C44])
+W19 = Part.Wire(S19.Edges)
+F19 = Part.Face(W19)
+P19 = F19.extrude(Vector(0, 0, 2.0320))
+Part.show(P19)
+
+App.activeDocument().addObject("Part::Cut","Cut18")
+App.activeDocument().Cut18.Base = App.activeDocument().Cut17
+App.activeDocument().Cut18.Tool = App.activeDocument().Shape018
+App.ActiveDocument.recompute()
+
+v89 = Vector(-6.4258, -37.5542, 5.0800)
+v90 = Vector(-7.9445, -48.1166, 5.0800)
+v91 = Vector(-19.3304, -44.7733, 5.0800)
+v92 = Vector(-14.8976, -35.0667, 5.0800)
+
+L45 = Part.LineSegment(v89, v90)
+L46 = Part.LineSegment(v91, v92)
+
+vc45 = Vector(-10.7340, -36.5567, 5.0800)
+vc46 = Vector(-13.7395, -46.7926, 5.0800)
+
+C45 = Part.Arc(v89, vc45, v92)
+C46 = Part.Arc(v90, vc46, v91)
+
+S20 = Part.Shape([L45, C45, L46, C46])
+W20 = Part.Wire(S20.Edges)
+F20 = Part.Face(W20)
+P20 = F20.extrude(Vector(0, 0, 2.0320))
+Part.show(P20)
+
+App.activeDocument().addObject("Part::Cut","Cut19")
+App.activeDocument().Cut19.Base = App.activeDocument().Cut18
+App.activeDocument().Cut19.Tool = App.activeDocument().Shape019
+App.ActiveDocument.recompute()
+
+v93 = Vector(4.4147, -37.8434, 5.0800)
+v94 = Vector(5.9333, -48.4057, 5.0800)
+v95 = Vector(-5.9333, -48.4057, 5.0800)
+v96 = Vector(-4.4147, -37.8434, 5.0800)
+
+L47 = Part.LineSegment(v93, v94)
+L48 = Part.LineSegment(v95, v96)
+
+vc47 = Vector(0.0000, -38.1000, 5.0800)
+vc48 = Vector(0.0000, -48.7680, 5.0800)
+
+C47 = Part.Arc(v93, vc47, v96)
+C48 = Part.Arc(v94, vc48, v95)
+
+S21 = Part.Shape([L47, C47, L48, C48])
+W21 = Part.Wire(S21.Edges)
+F21 = Part.Face(W21)
+P21 = F21.extrude(Vector(0, 0, 2.0320))
+Part.show(P21)
+
+App.activeDocument().addObject("Part::Cut","Cut20")
+App.activeDocument().Cut20.Base = App.activeDocument().Cut19
+App.activeDocument().Cut20.Tool = App.activeDocument().Shape020
+App.ActiveDocument.recompute()
+
+v97 = Vector(14.8976, -35.0667, 5.0800)
+v98 = Vector(19.3304, -44.7733, 5.0800)
+v99 = Vector(7.9445, -48.1166, 5.0800)
+v100 = Vector(6.4258, -37.5542, 5.0800)
+
+L49 = Part.LineSegment(v97, v98)
+L50 = Part.LineSegment(v99, v100)
+
+vc49 = Vector(10.7340, -36.5567, 5.0800)
+vc50 = Vector(13.7395, -46.7926, 5.0800)
+
+C49 = Part.Arc(v97, vc49, v100)
+C50 = Part.Arc(v98, vc50, v99)
+
+S22 = Part.Shape([L49, C49, L50, C50])
+W22 = Part.Wire(S22.Edges)
+F22 = Part.Face(W22)
+P22 = F22.extrude(Vector(0, 0, 2.0320))
+Part.show(P22)
+
+App.activeDocument().addObject("Part::Cut","Cut21")
+App.activeDocument().Cut21.Base = App.activeDocument().Cut20
+App.activeDocument().Cut21.Tool = App.activeDocument().Shape021
+App.ActiveDocument.recompute()
+
+v101 = Vector(24.1736, -29.4491, 5.0800)
+v102 = Vector(31.1615, -37.5137, 5.0800)
+v103 = Vector(21.1787, -43.9293, 5.0800)
+v104 = Vector(16.7458, -34.2226, 5.0800)
+
+L51 = Part.LineSegment(v101, v102)
+L52 = Part.LineSegment(v103, v104)
+
+vc51 = Vector(20.5984, -32.0518, 5.0800)
+vc52 = Vector(26.3660, -41.0263, 5.0800)
+
+C51 = Part.Arc(v101, vc51, v104)
+C52 = Part.Arc(v102, vc52, v103)
+
+S23 = Part.Shape([L51, C51, L52, C52])
+W23 = Part.Wire(S23.Edges)
+F23 = Part.Face(W23)
+P23 = F23.extrude(Vector(0, 0, 2.0320))
+Part.show(P23)
+
+App.activeDocument().addObject("Part::Cut","Cut22")
+App.activeDocument().Cut22.Base = App.activeDocument().Cut21
+App.activeDocument().Cut22.Tool = App.activeDocument().Shape022
+App.ActiveDocument.recompute()
+
+v105 = Vector(31.4911, -21.4457, 5.0800)
+v106 = Vector(40.4681, -27.2149, 5.0800)
+v107 = Vector(32.6971, -36.1831, 5.0800)
+v108 = Vector(25.7091, -28.1186, 5.0800)
+
+L53 = Part.LineSegment(v105, v106)
+L54 = Part.LineSegment(v107, v108)
+
+vc53 = Vector(28.7941, -24.9502, 5.0800)
+vc54 = Vector(36.8564, -31.9362, 5.0800)
+
+C53 = Part.Arc(v105, vc53, v108)
+C54 = Part.Arc(v106, vc54, v107)
+
+S24 = Part.Shape([L53, C53, L54, C54])
+W24 = Part.Wire(S24.Edges)
+F24 = Part.Face(W24)
+P24 = F24.extrude(Vector(0, 0, 2.0320))
+Part.show(P24)
+
+App.activeDocument().addObject("Part::Cut","Cut23")
+App.activeDocument().Cut23.Base = App.activeDocument().Cut22
+App.activeDocument().Cut23.Tool = App.activeDocument().Shape023
+App.ActiveDocument.recompute()
+
+v109 = Vector(36.2575, -11.7049, 5.0800)
+v110 = Vector(46.4962, -14.7113, 5.0800)
+v111 = Vector(41.5666, -25.5056, 5.0800)
+v112 = Vector(32.5896, -19.7365, 5.0800)
+
+L55 = Part.LineSegment(v109, v110)
+L56 = Part.LineSegment(v111, v112)
+
+vc55 = Vector(34.6570, -15.8273, 5.0800)
+vc56 = Vector(44.3609, -20.2590, 5.0800)
+
+C55 = Part.Arc(v109, vc55, v112)
+C56 = Part.Arc(v110, vc56, v111)
+
+S25 = Part.Shape([L55, C55, L56, C56])
+W25 = Part.Wire(S25.Edges)
+F25 = Part.Face(W25)
+P25 = F25.extrude(Vector(0, 0, 2.0320))
+Part.show(P25)
+
+App.activeDocument().addObject("Part::Cut","Cut24")
+App.activeDocument().Cut24.Base = App.activeDocument().Cut23
+App.activeDocument().Cut24.Tool = App.activeDocument().Shape024
+App.ActiveDocument.recompute()
+
+v113 = Vector(38.0865, -1.0159, 5.0800)
+v114 = Vector(48.7574, -1.0159, 5.0800)
+v115 = Vector(47.0686, -12.7618, 5.0800)
+v116 = Vector(36.8299, -9.7555, 5.0800)
+
+L57 = Part.LineSegment(v113, v114)
+L58 = Part.LineSegment(v115, v116)
+
+vc57 = Vector(37.7122, -5.4222, 5.0800)
+vc58 = Vector(48.2716, -6.9404, 5.0800)
+
+C57 = Part.Arc(v113, vc57, v116)
+C58 = Part.Arc(v114, vc58, v115)
+
+S26 = Part.Shape([L57, C57, L58, C58])
+W26 = Part.Wire(S26.Edges)
+F26 = Part.Face(W26)
+P26 = F26.extrude(Vector(0, 0, 2.0320))
+Part.show(P26)
+
+App.activeDocument().addObject("Part::Cut","Cut25")
+App.activeDocument().Cut25.Base = App.activeDocument().Cut24
+App.activeDocument().Cut25.Tool = App.activeDocument().Shape025
+App.ActiveDocument.recompute()
+
+v117 = Vector(36.8299, 9.7555, 5.0800)
+v118 = Vector(47.0686, 12.7618, 5.0800)
+v119 = Vector(48.7574, 1.0159, 5.0800)
+v120 = Vector(38.0865, 1.0159, 5.0800)
+
+L59 = Part.LineSegment(v117, v118)
+L60 = Part.LineSegment(v119, v120)
+
+vc59 = Vector(37.7122, 5.4222, 5.0800)
+vc60 = Vector(48.2716, 6.9404, 5.0800)
+
+C59 = Part.Arc(v117, vc59, v120)
+C60 = Part.Arc(v118, vc60, v119)
+
+S27 = Part.Shape([L59, C59, L60, C60])
+W27 = Part.Wire(S27.Edges)
+F27 = Part.Face(W27)
+P27 = F27.extrude(Vector(0, 0, 2.0320))
+Part.show(P27)
+
+App.activeDocument().addObject("Part::Cut","Cut26")
+App.activeDocument().Cut26.Base = App.activeDocument().Cut25
+App.activeDocument().Cut26.Tool = App.activeDocument().Shape026
+App.ActiveDocument.recompute()
+
+v121 = Vector(32.5896, 19.7365, 5.0800)
+v122 = Vector(41.5666, 25.5056, 5.0800)
+v123 = Vector(46.4962, 14.7113, 5.0800)
+v124 = Vector(36.2575, 11.7049, 5.0800)
+
+L61 = Part.LineSegment(v121, v122)
+L62 = Part.LineSegment(v123, v124)
+
+vc61 = Vector(34.6570, 15.8273, 5.0800)
+vc62 = Vector(44.3609, 20.2590, 5.0800)
+
+C61 = Part.Arc(v121, vc61, v124)
+C62 = Part.Arc(v122, vc62, v123)
+
+S28 = Part.Shape([L61, C61, L62, C62])
+W28 = Part.Wire(S28.Edges)
+F28 = Part.Face(W28)
+P28 = F28.extrude(Vector(0, 0, 2.0320))
+Part.show(P28)
+
+App.activeDocument().addObject("Part::Cut","Cut27")
+App.activeDocument().Cut27.Base = App.activeDocument().Cut26
+App.activeDocument().Cut27.Tool = App.activeDocument().Shape027
+App.ActiveDocument.recompute()
+
+v125 = Vector(25.7091, 28.1186, 5.0800)
+v126 = Vector(32.6971, 36.1831, 5.0800)
+v127 = Vector(40.4681, 27.2149, 5.0800)
+v128 = Vector(31.4911, 21.4457, 5.0800)
+
+L63 = Part.LineSegment(v125, v126)
+L64 = Part.LineSegment(v127, v128)
+
+vc63 = Vector(28.7941, 24.9502, 5.0800)
+vc64 = Vector(36.8564, 31.9362, 5.0800)
+
+C63 = Part.Arc(v125, vc63, v128)
+C64 = Part.Arc(v126, vc64, v127)
+
+S29 = Part.Shape([L63, C63, L64, C64])
+W29 = Part.Wire(S29.Edges)
+F29 = Part.Face(W29)
+P29 = F29.extrude(Vector(0, 0, 2.0320))
+Part.show(P29)
+
+App.activeDocument().addObject("Part::Cut","Cut28")
+App.activeDocument().Cut28.Base = App.activeDocument().Cut27
+App.activeDocument().Cut28.Tool = App.activeDocument().Shape028
+App.ActiveDocument.recompute()
+
+v129 = Vector(16.7458, 34.2226, 5.0800)
+v130 = Vector(21.1787, 43.9293, 5.0800)
+v131 = Vector(31.1615, 37.5137, 5.0800)
+v132 = Vector(24.1736, 29.4491, 5.0800)
+
+L65 = Part.LineSegment(v129, v130)
+L66 = Part.LineSegment(v131, v132)
+
+vc65 = Vector(20.5984, 32.0518, 5.0800)
+vc66 = Vector(26.3660, 41.0263, 5.0800)
+
+C65 = Part.Arc(v129, vc65, v132)
+C66 = Part.Arc(v130, vc66, v131)
+
+S30 = Part.Shape([L65, C65, L66, C66])
+W30 = Part.Wire(S30.Edges)
+F30 = Part.Face(W30)
+P30 = F30.extrude(Vector(0, 0, 2.0320))
+Part.show(P30)
+
+App.activeDocument().addObject("Part::Cut","Cut29")
+App.activeDocument().Cut29.Base = App.activeDocument().Cut28
+App.activeDocument().Cut29.Tool = App.activeDocument().Shape029
+App.ActiveDocument.recompute()
+
+v133 = Vector(6.4258, 37.5542, 5.0800)
+v134 = Vector(7.9445, 48.1166, 5.0800)
+v135 = Vector(19.3304, 44.7733, 5.0800)
+v136 = Vector(14.8976, 35.0667, 5.0800)
+
+L67 = Part.LineSegment(v133, v134)
+L68 = Part.LineSegment(v135, v136)
+
+vc67 = Vector(10.7340, 36.5567, 5.0800)
+vc68 = Vector(13.7395, 46.7926, 5.0800)
+
+C67 = Part.Arc(v133, vc67, v136)
+C68 = Part.Arc(v134, vc68, v135)
+
+S31 = Part.Shape([L67, C67, L68, C68])
+W31 = Part.Wire(S31.Edges)
+F31 = Part.Face(W31)
+P31 = F31.extrude(Vector(0, 0, 2.0320))
+Part.show(P31)
+
+App.activeDocument().addObject("Part::Cut","Cut30")
+App.activeDocument().Cut30.Base = App.activeDocument().Cut29
+App.activeDocument().Cut30.Tool = App.activeDocument().Shape030
+App.ActiveDocument.recompute()
+
+v137 = Vector(-0.9419, 13.6836, 5.0800)
+v138 = Vector(-4.1254, 35.8313, 5.0800)
+v139 = Vector(4.1254, 35.8313, 5.0800)
+v140 = Vector(0.9419, 13.6836, 5.0800)
+
+L69 = Part.LineSegment(v137, v138)
+L70 = Part.LineSegment(v139, v140)
+
+vc69 = Vector(0.0000, 13.7160, 5.0800)
+vc70 = Vector(0.0000, 36.0680, 5.0800)
+
+C69 = Part.Arc(v137, vc69, v140)
+C70 = Part.Arc(v138, vc70, v139)
+
+S32 = Part.Shape([L69, C69, L70, C70])
+W32 = Part.Wire(S32.Edges)
+F32 = Part.Face(W32)
+P32 = F32.extrude(Vector(0, 0, 2.0320))
+Part.show(P32)
+
+App.activeDocument().addObject("Part::Cut","Cut31")
+App.activeDocument().Cut31.Base = App.activeDocument().Cut30
+App.activeDocument().Cut31.Tool = App.activeDocument().Shape031
+App.ActiveDocument.recompute()
+
+v141 = Vector(-4.7589, 12.8640, 5.0800)
+v142 = Vector(-14.0532, 33.2176, 5.0800)
+v143 = Vector(-6.1365, 35.5421, 5.0800)
+v144 = Vector(-2.9514, 13.3947, 5.0800)
+
+L71 = Part.LineSegment(v141, v142)
+L72 = Part.LineSegment(v143, v144)
+
+vc71 = Vector(-3.8642, 13.1604, 5.0800)
+vc72 = Vector(-10.1615, 34.6070, 5.0800)
+
+C71 = Part.Arc(v141, vc71, v144)
+C72 = Part.Arc(v142, vc72, v143)
+
+S33 = Part.Shape([L71, C71, L72, C72])
+W33 = Part.Wire(S33.Edges)
+F33 = Part.Face(W33)
+P33 = F33.extrude(Vector(0, 0, 2.0320))
+Part.show(P33)
+
+App.activeDocument().addObject("Part::Cut","Cut32")
+App.activeDocument().Cut32.Base = App.activeDocument().Cut31
+App.activeDocument().Cut32.Tool = App.activeDocument().Shape032
+App.ActiveDocument.recompute()
+
+v145 = Vector(-8.1903, 11.0022, 5.0800)
+v146 = Vector(-22.8424, 27.9128, 5.0800)
+v147 = Vector(-15.9013, 32.3736, 5.0800)
+v148 = Vector(-6.6055, 12.0206, 5.0800)
+
+L73 = Part.LineSegment(v145, v146)
+L74 = Part.LineSegment(v147, v148)
+
+vc73 = Vector(-7.4154, 11.5386, 5.0800)
+vc74 = Vector(-19.4998, 30.3423, 5.0800)
+
+C73 = Part.Arc(v145, vc73, v148)
+C74 = Part.Arc(v146, vc74, v147)
+
+S34 = Part.Shape([L73, C73, L74, C74])
+W34 = Part.Wire(S34.Edges)
+F34 = Part.Face(W34)
+P34 = F34.extrude(Vector(0, 0, 2.0320))
+Part.show(P34)
+
+App.activeDocument().addObject("Part::Cut","Cut33")
+App.activeDocument().Cut33.Base = App.activeDocument().Cut32
+App.activeDocument().Cut33.Tool = App.activeDocument().Shape033
+App.ActiveDocument.recompute()
+
+v149 = Vector(-10.9582, 8.2490, 5.0800)
+v150 = Vector(-29.7811, 20.3467, 5.0800)
+v151 = Vector(-24.3779, 26.5823, 5.0800)
+v152 = Vector(-9.7246, 9.6727, 5.0800)
+
+L75 = Part.LineSegment(v149, v150)
+L76 = Part.LineSegment(v151, v152)
+
+vc75 = Vector(-10.3659, 8.9821, 5.0800)
+vc76 = Vector(-27.2584, 23.6195, 5.0800)
+
+C75 = Part.Arc(v149, vc75, v152)
+C76 = Part.Arc(v150, vc76, v151)
+
+S35 = Part.Shape([L75, C75, L76, C76])
+W35 = Part.Wire(S35.Edges)
+F35 = Part.Face(W35)
+P35 = F35.extrude(Vector(0, 0, 2.0320))
+Part.show(P35)
+
+App.activeDocument().addObject("Part::Cut","Cut34")
+App.activeDocument().Cut34.Base = App.activeDocument().Cut33
+App.activeDocument().Cut34.Tool = App.activeDocument().Shape034
+App.ActiveDocument.recompute()
+
+v153 = Vector(-12.8383, 4.8276, 5.0800)
+v154 = Vector(-34.3071, 11.1322, 5.0800)
+v155 = Vector(-30.8795, 18.6375, 5.0800)
+v156 = Vector(-12.0558, 6.5412, 5.0800)
+
+L77 = Part.LineSegment(v153, v154)
+L78 = Part.LineSegment(v155, v156)
+
+vc77 = Vector(-12.4765, 5.6978, 5.0800)
+vc78 = Vector(-32.8086, 14.9832, 5.0800)
+
+C77 = Part.Arc(v153, vc77, v156)
+C78 = Part.Arc(v154, vc78, v155)
+
+S36 = Part.Shape([L77, C77, L78, C78])
+W36 = Part.Wire(S36.Edges)
+F36 = Part.Face(W36)
+P36 = F36.extrude(Vector(0, 0, 2.0320))
+Part.show(P36)
+
+App.activeDocument().addObject("Part::Cut","Cut35")
+App.activeDocument().Cut35.Base = App.activeDocument().Cut34
+App.activeDocument().Cut35.Tool = App.activeDocument().Shape035
+App.ActiveDocument.recompute()
+
+v157 = Vector(-13.6784, 1.0151, 5.0800)
+v158 = Vector(-36.0537, 1.0159, 5.0800)
+v159 = Vector(-34.8795, 9.1828, 5.0800)
+v160 = Vector(-13.4103, 2.8797, 5.0800)
+
+L79 = Part.LineSegment(v157, v158)
+L80 = Part.LineSegment(v159, v160)
+
+vc79 = Vector(-13.5764, 1.9520, 5.0800)
+vc80 = Vector(-35.7009, 5.1330, 5.0800)
+
+C79 = Part.Arc(v157, vc79, v160)
+C80 = Part.Arc(v158, vc80, v159)
+
+S37 = Part.Shape([L79, C79, L80, C80])
+W37 = Part.Wire(S37.Edges)
+F37 = Part.Face(W37)
+P37 = F37.extrude(Vector(0, 0, 2.0320))
+Part.show(P37)
+
+App.activeDocument().addObject("Part::Cut","Cut36")
+App.activeDocument().Cut36.Base = App.activeDocument().Cut35
+App.activeDocument().Cut36.Tool = App.activeDocument().Shape036
+App.ActiveDocument.recompute()
+
+v161 = Vector(-13.4103, -2.8797, 5.0800)
+v162 = Vector(-34.8795, -9.1828, 5.0800)
+v163 = Vector(-36.0537, -1.0159, 5.0800)
+v164 = Vector(-13.6784, -1.0151, 5.0800)
+
+L81 = Part.LineSegment(v161, v162)
+L82 = Part.LineSegment(v163, v164)
+
+vc81 = Vector(-13.5764, -1.9520, 5.0800)
+vc82 = Vector(-35.7009, -5.1330, 5.0800)
+
+C81 = Part.Arc(v161, vc81, v164)
+C82 = Part.Arc(v162, vc82, v163)
+
+S38 = Part.Shape([L81, C81, L82, C82])
+W38 = Part.Wire(S38.Edges)
+F38 = Part.Face(W38)
+P38 = F38.extrude(Vector(0, 0, 2.0320))
+Part.show(P38)
+
+App.activeDocument().addObject("Part::Cut","Cut37")
+App.activeDocument().Cut37.Base = App.activeDocument().Cut36
+App.activeDocument().Cut37.Tool = App.activeDocument().Shape037
+App.ActiveDocument.recompute()
+
+v165 = Vector(-12.0558, -6.5412, 5.0800)
+v166 = Vector(-30.8795, -18.6375, 5.0800)
+v167 = Vector(-34.3071, -11.1322, 5.0800)
+v168 = Vector(-12.8383, -4.8276, 5.0800)
+
+L83 = Part.LineSegment(v165, v166)
+L84 = Part.LineSegment(v167, v168)
+
+vc83 = Vector(-12.4765, -5.6978, 5.0800)
+vc84 = Vector(-32.8086, -14.9832, 5.0800)
+
+C83 = Part.Arc(v165, vc83, v168)
+C84 = Part.Arc(v166, vc84, v167)
+
+S39 = Part.Shape([L83, C83, L84, C84])
+W39 = Part.Wire(S39.Edges)
+F39 = Part.Face(W39)
+P39 = F39.extrude(Vector(0, 0, 2.0320))
+Part.show(P39)
+
+App.activeDocument().addObject("Part::Cut","Cut38")
+App.activeDocument().Cut38.Base = App.activeDocument().Cut37
+App.activeDocument().Cut38.Tool = App.activeDocument().Shape038
+App.ActiveDocument.recompute()
+
+v169 = Vector(-9.7246, -9.6727, 5.0800)
+v170 = Vector(-24.3779, -26.5823, 5.0800)
+v171 = Vector(-29.7811, -20.3467, 5.0800)
+v172 = Vector(-10.9582, -8.2490, 5.0800)
+
+L85 = Part.LineSegment(v169, v170)
+L86 = Part.LineSegment(v171, v172)
+
+vc85 = Vector(-10.3659, -8.9821, 5.0800)
+vc86 = Vector(-27.2584, -23.6195, 5.0800)
+
+C85 = Part.Arc(v169, vc85, v172)
+C86 = Part.Arc(v170, vc86, v171)
+
+S40 = Part.Shape([L85, C85, L86, C86])
+W40 = Part.Wire(S40.Edges)
+F40 = Part.Face(W40)
+P40 = F40.extrude(Vector(0, 0, 2.0320))
+Part.show(P40)
+
+App.activeDocument().addObject("Part::Cut","Cut39")
+App.activeDocument().Cut39.Base = App.activeDocument().Cut38
+App.activeDocument().Cut39.Tool = App.activeDocument().Shape039
+App.ActiveDocument.recompute()
+
+v173 = Vector(-6.6055, -12.0206, 5.0800)
+v174 = Vector(-15.9013, -32.3736, 5.0800)
+v175 = Vector(-22.8424, -27.9128, 5.0800)
+v176 = Vector(-8.1903, -11.0022, 5.0800)
+
+L87 = Part.LineSegment(v173, v174)
+L88 = Part.LineSegment(v175, v176)
+
+vc87 = Vector(-7.4154, -11.5386, 5.0800)
+vc88 = Vector(-19.4998, -30.3423, 5.0800)
+
+C87 = Part.Arc(v173, vc87, v176)
+C88 = Part.Arc(v174, vc88, v175)
+
+S41 = Part.Shape([L87, C87, L88, C88])
+W41 = Part.Wire(S41.Edges)
+F41 = Part.Face(W41)
+P41 = F41.extrude(Vector(0, 0, 2.0320))
+Part.show(P41)
+
+App.activeDocument().addObject("Part::Cut","Cut40")
+App.activeDocument().Cut40.Base = App.activeDocument().Cut39
+App.activeDocument().Cut40.Tool = App.activeDocument().Shape040
+App.ActiveDocument.recompute()
+
+v177 = Vector(-2.9514, -13.3947, 5.0800)
+v178 = Vector(-6.1365, -35.5421, 5.0800)
+v179 = Vector(-14.0532, -33.2176, 5.0800)
+v180 = Vector(-4.7589, -12.8640, 5.0800)
+
+L89 = Part.LineSegment(v177, v178)
+L90 = Part.LineSegment(v179, v180)
+
+vc89 = Vector(-3.8642, -13.1604, 5.0800)
+vc90 = Vector(-10.1615, -34.6070, 5.0800)
+
+C89 = Part.Arc(v177, vc89, v180)
+C90 = Part.Arc(v178, vc90, v179)
+
+S42 = Part.Shape([L89, C89, L90, C90])
+W42 = Part.Wire(S42.Edges)
+F42 = Part.Face(W42)
+P42 = F42.extrude(Vector(0, 0, 2.0320))
+Part.show(P42)
+
+App.activeDocument().addObject("Part::Cut","Cut41")
+App.activeDocument().Cut41.Base = App.activeDocument().Cut40
+App.activeDocument().Cut41.Tool = App.activeDocument().Shape041
+App.ActiveDocument.recompute()
+
+v181 = Vector(0.9419, -13.6836, 5.0800)
+v182 = Vector(4.1254, -35.8313, 5.0800)
+v183 = Vector(-4.1254, -35.8313, 5.0800)
+v184 = Vector(-0.9419, -13.6836, 5.0800)
+
+L91 = Part.LineSegment(v181, v182)
+L92 = Part.LineSegment(v183, v184)
+
+vc91 = Vector(0.0000, -13.7160, 5.0800)
+vc92 = Vector(0.0000, -36.0680, 5.0800)
+
+C91 = Part.Arc(v181, vc91, v184)
+C92 = Part.Arc(v182, vc92, v183)
+
+S43 = Part.Shape([L91, C91, L92, C92])
+W43 = Part.Wire(S43.Edges)
+F43 = Part.Face(W43)
+P43 = F43.extrude(Vector(0, 0, 2.0320))
+Part.show(P43)
+
+App.activeDocument().addObject("Part::Cut","Cut42")
+App.activeDocument().Cut42.Base = App.activeDocument().Cut41
+App.activeDocument().Cut42.Tool = App.activeDocument().Shape042
+App.ActiveDocument.recompute()
+
+v185 = Vector(4.7589, -12.8640, 5.0800)
+v186 = Vector(14.0532, -33.2176, 5.0800)
+v187 = Vector(6.1365, -35.5421, 5.0800)
+v188 = Vector(2.9514, -13.3947, 5.0800)
+
+L93 = Part.LineSegment(v185, v186)
+L94 = Part.LineSegment(v187, v188)
+
+vc93 = Vector(3.8642, -13.1604, 5.0800)
+vc94 = Vector(10.1615, -34.6070, 5.0800)
+
+C93 = Part.Arc(v185, vc93, v188)
+C94 = Part.Arc(v186, vc94, v187)
+
+S44 = Part.Shape([L93, C93, L94, C94])
+W44 = Part.Wire(S44.Edges)
+F44 = Part.Face(W44)
+P44 = F44.extrude(Vector(0, 0, 2.0320))
+Part.show(P44)
+
+App.activeDocument().addObject("Part::Cut","Cut43")
+App.activeDocument().Cut43.Base = App.activeDocument().Cut42
+App.activeDocument().Cut43.Tool = App.activeDocument().Shape043
+App.ActiveDocument.recompute()
+
+v189 = Vector(8.1903, -11.0022, 5.0800)
+v190 = Vector(22.8424, -27.9128, 5.0800)
+v191 = Vector(15.9013, -32.3736, 5.0800)
+v192 = Vector(6.6055, -12.0206, 5.0800)
+
+L95 = Part.LineSegment(v189, v190)
+L96 = Part.LineSegment(v191, v192)
+
+vc95 = Vector(7.4154, -11.5386, 5.0800)
+vc96 = Vector(19.4998, -30.3423, 5.0800)
+
+C95 = Part.Arc(v189, vc95, v192)
+C96 = Part.Arc(v190, vc96, v191)
+
+S45 = Part.Shape([L95, C95, L96, C96])
+W45 = Part.Wire(S45.Edges)
+F45 = Part.Face(W45)
+P45 = F45.extrude(Vector(0, 0, 2.0320))
+Part.show(P45)
+
+App.activeDocument().addObject("Part::Cut","Cut44")
+App.activeDocument().Cut44.Base = App.activeDocument().Cut43
+App.activeDocument().Cut44.Tool = App.activeDocument().Shape044
+App.ActiveDocument.recompute()
+
+v193 = Vector(10.9582, -8.2490, 5.0800)
+v194 = Vector(29.7811, -20.3467, 5.0800)
+v195 = Vector(24.3779, -26.5823, 5.0800)
+v196 = Vector(9.7246, -9.6727, 5.0800)
+
+L97 = Part.LineSegment(v193, v194)
+L98 = Part.LineSegment(v195, v196)
+
+vc97 = Vector(10.3659, -8.9821, 5.0800)
+vc98 = Vector(27.2584, -23.6195, 5.0800)
+
+C97 = Part.Arc(v193, vc97, v196)
+C98 = Part.Arc(v194, vc98, v195)
+
+S46 = Part.Shape([L97, C97, L98, C98])
+W46 = Part.Wire(S46.Edges)
+F46 = Part.Face(W46)
+P46 = F46.extrude(Vector(0, 0, 2.0320))
+Part.show(P46)
+
+App.activeDocument().addObject("Part::Cut","Cut45")
+App.activeDocument().Cut45.Base = App.activeDocument().Cut44
+App.activeDocument().Cut45.Tool = App.activeDocument().Shape045
+App.ActiveDocument.recompute()
+
+v197 = Vector(12.8383, -4.8276, 5.0800)
+v198 = Vector(34.3071, -11.1322, 5.0800)
+v199 = Vector(30.8795, -18.6375, 5.0800)
+v200 = Vector(12.0558, -6.5412, 5.0800)
+
+L99 = Part.LineSegment(v197, v198)
+L100 = Part.LineSegment(v199, v200)
+
+vc99 = Vector(12.4765, -5.6978, 5.0800)
+vc100 = Vector(32.8086, -14.9832, 5.0800)
+
+C99 = Part.Arc(v197, vc99, v200)
+C100 = Part.Arc(v198, vc100, v199)
+
+S47 = Part.Shape([L99, C99, L100, C100])
+W47 = Part.Wire(S47.Edges)
+F47 = Part.Face(W47)
+P47 = F47.extrude(Vector(0, 0, 2.0320))
+Part.show(P47)
+
+App.activeDocument().addObject("Part::Cut","Cut46")
+App.activeDocument().Cut46.Base = App.activeDocument().Cut45
+App.activeDocument().Cut46.Tool = App.activeDocument().Shape046
+App.ActiveDocument.recompute()
+
+v201 = Vector(13.6784, -1.0151, 5.0800)
+v202 = Vector(36.0537, -1.0159, 5.0800)
+v203 = Vector(34.8795, -9.1828, 5.0800)
+v204 = Vector(13.4103, -2.8797, 5.0800)
+
+L101 = Part.LineSegment(v201, v202)
+L102 = Part.LineSegment(v203, v204)
+
+vc101 = Vector(13.5764, -1.9520, 5.0800)
+vc102 = Vector(35.7009, -5.1330, 5.0800)
+
+C101 = Part.Arc(v201, vc101, v204)
+C102 = Part.Arc(v202, vc102, v203)
+
+S48 = Part.Shape([L101, C101, L102, C102])
+W48 = Part.Wire(S48.Edges)
+F48 = Part.Face(W48)
+P48 = F48.extrude(Vector(0, 0, 2.0320))
+Part.show(P48)
+
+App.activeDocument().addObject("Part::Cut","Cut47")
+App.activeDocument().Cut47.Base = App.activeDocument().Cut46
+App.activeDocument().Cut47.Tool = App.activeDocument().Shape047
+App.ActiveDocument.recompute()
+
+v205 = Vector(13.4103, 2.8797, 5.0800)
+v206 = Vector(34.8795, 9.1828, 5.0800)
+v207 = Vector(36.0537, 1.0159, 5.0800)
+v208 = Vector(13.6784, 1.0151, 5.0800)
+
+L103 = Part.LineSegment(v205, v206)
+L104 = Part.LineSegment(v207, v208)
+
+vc103 = Vector(13.5764, 1.9520, 5.0800)
+vc104 = Vector(35.7009, 5.1330, 5.0800)
+
+C103 = Part.Arc(v205, vc103, v208)
+C104 = Part.Arc(v206, vc104, v207)
+
+S49 = Part.Shape([L103, C103, L104, C104])
+W49 = Part.Wire(S49.Edges)
+F49 = Part.Face(W49)
+P49 = F49.extrude(Vector(0, 0, 2.0320))
+Part.show(P49)
+
+App.activeDocument().addObject("Part::Cut","Cut48")
+App.activeDocument().Cut48.Base = App.activeDocument().Cut47
+App.activeDocument().Cut48.Tool = App.activeDocument().Shape048
+App.ActiveDocument.recompute()
+
+v209 = Vector(12.0558, 6.5412, 5.0800)
+v210 = Vector(30.8795, 18.6375, 5.0800)
+v211 = Vector(34.3071, 11.1322, 5.0800)
+v212 = Vector(12.8383, 4.8276, 5.0800)
+
+L105 = Part.LineSegment(v209, v210)
+L106 = Part.LineSegment(v211, v212)
+
+vc105 = Vector(12.4765, 5.6978, 5.0800)
+vc106 = Vector(32.8086, 14.9832, 5.0800)
+
+C105 = Part.Arc(v209, vc105, v212)
+C106 = Part.Arc(v210, vc106, v211)
+
+S50 = Part.Shape([L105, C105, L106, C106])
+W50 = Part.Wire(S50.Edges)
+F50 = Part.Face(W50)
+P50 = F50.extrude(Vector(0, 0, 2.0320))
+Part.show(P50)
+
+App.activeDocument().addObject("Part::Cut","Cut49")
+App.activeDocument().Cut49.Base = App.activeDocument().Cut48
+App.activeDocument().Cut49.Tool = App.activeDocument().Shape049
+App.ActiveDocument.recompute()
+
+v213 = Vector(9.7246, 9.6727, 5.0800)
+v214 = Vector(24.3779, 26.5823, 5.0800)
+v215 = Vector(29.7811, 20.3467, 5.0800)
+v216 = Vector(10.9582, 8.2490, 5.0800)
+
+L107 = Part.LineSegment(v213, v214)
+L108 = Part.LineSegment(v215, v216)
+
+vc107 = Vector(10.3659, 8.9821, 5.0800)
+vc108 = Vector(27.2584, 23.6195, 5.0800)
+
+C107 = Part.Arc(v213, vc107, v216)
+C108 = Part.Arc(v214, vc108, v215)
+
+S51 = Part.Shape([L107, C107, L108, C108])
+W51 = Part.Wire(S51.Edges)
+F51 = Part.Face(W51)
+P51 = F51.extrude(Vector(0, 0, 2.0320))
+Part.show(P51)
+
+App.activeDocument().addObject("Part::Cut","Cut50")
+App.activeDocument().Cut50.Base = App.activeDocument().Cut49
+App.activeDocument().Cut50.Tool = App.activeDocument().Shape050
+App.ActiveDocument.recompute()
+
+v217 = Vector(6.6055, 12.0206, 5.0800)
+v218 = Vector(15.9013, 32.3736, 5.0800)
+v219 = Vector(22.8424, 27.9128, 5.0800)
+v220 = Vector(8.1903, 11.0022, 5.0800)
+
+L109 = Part.LineSegment(v217, v218)
+L110 = Part.LineSegment(v219, v220)
+
+vc109 = Vector(7.4154, 11.5386, 5.0800)
+vc110 = Vector(19.4998, 30.3423, 5.0800)
+
+C109 = Part.Arc(v217, vc109, v220)
+C110 = Part.Arc(v218, vc110, v219)
+
+S52 = Part.Shape([L109, C109, L110, C110])
+W52 = Part.Wire(S52.Edges)
+F52 = Part.Face(W52)
+P52 = F52.extrude(Vector(0, 0, 2.0320))
+Part.show(P52)
+
+App.activeDocument().addObject("Part::Cut","Cut51")
+App.activeDocument().Cut51.Base = App.activeDocument().Cut50
+App.activeDocument().Cut51.Tool = App.activeDocument().Shape051
+App.ActiveDocument.recompute()
+
+v221 = Vector(2.9514, 13.3947, 5.0800)
+v222 = Vector(6.1365, 35.5421, 5.0800)
+v223 = Vector(14.0532, 33.2176, 5.0800)
+v224 = Vector(4.7589, 12.8640, 5.0800)
+
+L111 = Part.LineSegment(v221, v222)
+L112 = Part.LineSegment(v223, v224)
+
+vc111 = Vector(3.8642, 13.1604, 5.0800)
+vc112 = Vector(10.1615, 34.6070, 5.0800)
+
+C111 = Part.Arc(v221, vc111, v224)
+C112 = Part.Arc(v222, vc112, v223)
+
+S53 = Part.Shape([L111, C111, L112, C112])
+W53 = Part.Wire(S53.Edges)
+F53 = Part.Face(W53)
+P53 = F53.extrude(Vector(0, 0, 2.0320))
+Part.show(P53)
+
+App.activeDocument().addObject("Part::Cut","Cut52")
+App.activeDocument().Cut52.Base = App.activeDocument().Cut51
+App.activeDocument().Cut52.Tool = App.activeDocument().Shape052
+App.ActiveDocument.recompute()
+
+v225 = Vector(-12.0717, 36.1370, 0)
+v226 = Vector(-15.7214, 46.1645, 0)
+v227 = Vector(15.7214, 46.1645, 0)
+v228 = Vector(12.0717, 36.1370, 0)
+
+L113 = Part.LineSegment(v225, v226)
+L114 = Part.LineSegment(v227, v228)
+
+vc113 = Vector(0.0000, 38.1000, 0)
+vc114 = Vector(0.0000, 48.7680, 0)
+
+C113 = Part.Arc(v225, vc113, v228)
+C114 = Part.Arc(v226, vc114, v227)
+
+S54 = Part.Shape([L113, C113, L114, C114])
+W54 = Part.Wire(S54.Edges)
+F54 = Part.Face(W54)
+P54 = F54.extrude(Vector(0, 0, 2.0320))
+Part.show(P54)
+
+App.activeDocument().addObject("Part::Cut","Cut53")
+App.activeDocument().Cut53.Base = App.activeDocument().Cut52
+App.activeDocument().Cut53.Tool = App.activeDocument().Shape053
+App.ActiveDocument.recompute()
+
+v229 = Vector(-32.4759, 19.9230, 0)
+v230 = Vector(-41.7172, 25.2585, 0)
+v231 = Vector(-17.6307, 45.4695, 0)
+v232 = Vector(-13.9809, 35.4421, 0)
+
+L115 = Part.LineSegment(v229, v230)
+L116 = Part.LineSegment(v231, v232)
+
+vc115 = Vector(-24.4902, 29.1863, 0)
+vc116 = Vector(-31.3475, 37.3585, 0)
+
+C115 = Part.Arc(v229, vc115, v232)
+C116 = Part.Arc(v230, vc116, v231)
+
+S55 = Part.Shape([L115, C115, L116, C116])
+W55 = Part.Wire(S55.Edges)
+F55 = Part.Face(W55)
+P55 = F55.extrude(Vector(0, 0, 2.0320))
+Part.show(P55)
+
+App.activeDocument().addObject("Part::Cut","Cut54")
+App.activeDocument().Cut54.Base = App.activeDocument().Cut53
+App.activeDocument().Cut54.Tool = App.activeDocument().Shape054
+App.ActiveDocument.recompute()
+
+v233 = Vector(-37.6842, -5.6132, 0)
+v234 = Vector(-48.1931, -7.4661, 0)
+v235 = Vector(-42.7331, 23.4989, 0)
+v236 = Vector(-33.4918, 18.1634, 0)
+
+L117 = Part.LineSegment(v233, v234)
+L118 = Part.LineSegment(v235, v236)
+
+vc117 = Vector(-37.5212, 6.6160, 0)
+vc118 = Vector(-48.0271, 8.4685, 0)
+
+C117 = Part.Arc(v233, vc117, v236)
+C118 = Part.Arc(v234, vc118, v235)
+
+S56 = Part.Shape([L117, C117, L118, C118])
+W56 = Part.Wire(S56.Edges)
+F56 = Part.Face(W56)
+P56 = F56.extrude(Vector(0, 0, 2.0320))
+Part.show(P56)
+
+App.activeDocument().addObject("Part::Cut","Cut55")
+App.activeDocument().Cut55.Base = App.activeDocument().Cut54
+App.activeDocument().Cut55.Tool = App.activeDocument().Shape055
+App.ActiveDocument.recompute()
+
+v237 = Vector(-25.2597, -28.5229, 0)
+v238 = Vector(-32.1189, -36.6973, 0)
+v239 = Vector(-47.8403, -9.4671, 0)
+v240 = Vector(-37.3314, -7.6141, 0)
+
+L119 = Part.LineSegment(v237, v238)
+L120 = Part.LineSegment(v239, v240)
+
+vc119 = Vector(-32.9956, -19.0500, 0)
+vc120 = Vector(-42.2343, -24.3840, 0)
+
+C119 = Part.Arc(v237, vc119, v240)
+C120 = Part.Arc(v238, vc120, v239)
+
+S57 = Part.Shape([L119, C119, L120, C120])
+W57 = Part.Wire(S57.Edges)
+F57 = Part.Face(W57)
+P57 = F57.extrude(Vector(0, 0, 2.0320))
+Part.show(P57)
+
+App.activeDocument().addObject("Part::Cut","Cut56")
+App.activeDocument().Cut56.Base = App.activeDocument().Cut55
+App.activeDocument().Cut56.Tool = App.activeDocument().Shape056
+App.ActiveDocument.recompute()
+
+v241 = Vector(-1.0159, -38.0865, 0)
+v242 = Vector(-1.0159, -48.7574, 0)
+v243 = Vector(-30.5624, -38.0034, 0)
+v244 = Vector(-23.7033, -29.8289, 0)
+
+L121 = Part.LineSegment(v241, v242)
+L122 = Part.LineSegment(v243, v244)
+
+vc121 = Vector(-13.0310, -35.8023, 0)
+vc122 = Vector(-16.6796, -45.8269, 0)
+
+C121 = Part.Arc(v241, vc121, v244)
+C122 = Part.Arc(v242, vc122, v243)
+
+S58 = Part.Shape([L121, C121, L122, C122])
+W58 = Part.Wire(S58.Edges)
+F58 = Part.Face(W58)
+P58 = F58.extrude(Vector(0, 0, 2.0320))
+Part.show(P58)
+
+App.activeDocument().addObject("Part::Cut","Cut57")
+App.activeDocument().Cut57.Base = App.activeDocument().Cut56
+App.activeDocument().Cut57.Tool = App.activeDocument().Shape057
+App.ActiveDocument.recompute()
+
+v245 = Vector(23.7033, -29.8289, 0)
+v246 = Vector(30.5624, -38.0034, 0)
+v247 = Vector(1.0159, -48.7574, 0)
+v248 = Vector(1.0159, -38.0865, 0)
+
+L123 = Part.LineSegment(v245, v246)
+L124 = Part.LineSegment(v247, v248)
+
+vc123 = Vector(13.0310, -35.8023, 0)
+vc124 = Vector(16.6796, -45.8269, 0)
+
+C123 = Part.Arc(v245, vc123, v248)
+C124 = Part.Arc(v246, vc124, v247)
+
+S59 = Part.Shape([L123, C123, L124, C124])
+W59 = Part.Wire(S59.Edges)
+F59 = Part.Face(W59)
+P59 = F59.extrude(Vector(0, 0, 2.0320))
+Part.show(P59)
+
+App.activeDocument().addObject("Part::Cut","Cut58")
+App.activeDocument().Cut58.Base = App.activeDocument().Cut57
+App.activeDocument().Cut58.Tool = App.activeDocument().Shape058
+App.ActiveDocument.recompute()
+
+v249 = Vector(37.3314, -7.6141, 0)
+v250 = Vector(47.8403, -9.4671, 0)
+v251 = Vector(32.1189, -36.6973, 0)
+v252 = Vector(25.2597, -28.5229, 0)
+
+L125 = Part.LineSegment(v249, v250)
+L126 = Part.LineSegment(v251, v252)
+
+vc125 = Vector(32.9956, -19.0500, 0)
+vc126 = Vector(42.2343, -24.3840, 0)
+
+C125 = Part.Arc(v249, vc125, v252)
+C126 = Part.Arc(v250, vc126, v251)
+
+S60 = Part.Shape([L125, C125, L126, C126])
+W60 = Part.Wire(S60.Edges)
+F60 = Part.Face(W60)
+P60 = F60.extrude(Vector(0, 0, 2.0320))
+Part.show(P60)
+
+App.activeDocument().addObject("Part::Cut","Cut59")
+App.activeDocument().Cut59.Base = App.activeDocument().Cut58
+App.activeDocument().Cut59.Tool = App.activeDocument().Shape059
+App.ActiveDocument.recompute()
+
+v253 = Vector(33.4918, 18.1634, 0)
+v254 = Vector(42.7331, 23.4989, 0)
+v255 = Vector(48.1931, -7.4661, 0)
+v256 = Vector(37.6842, -5.6132, 0)
+
+L127 = Part.LineSegment(v253, v254)
+L128 = Part.LineSegment(v255, v256)
+
+vc127 = Vector(37.5212, 6.6160, 0)
+vc128 = Vector(48.0271, 8.4685, 0)
+
+C127 = Part.Arc(v253, vc127, v256)
+C128 = Part.Arc(v254, vc128, v255)
+
+S61 = Part.Shape([L127, C127, L128, C128])
+W61 = Part.Wire(S61.Edges)
+F61 = Part.Face(W61)
+P61 = F61.extrude(Vector(0, 0, 2.0320))
+Part.show(P61)
+
+App.activeDocument().addObject("Part::Cut","Cut60")
+App.activeDocument().Cut60.Base = App.activeDocument().Cut59
+App.activeDocument().Cut60.Tool = App.activeDocument().Shape060
+App.ActiveDocument.recompute()
+
+v257 = Vector(13.9809, 35.4421, 0)
+v258 = Vector(17.6307, 45.4695, 0)
+v259 = Vector(41.7172, 25.2585, 0)
+v260 = Vector(32.4759, 19.9230, 0)
+
+L129 = Part.LineSegment(v257, v258)
+L130 = Part.LineSegment(v259, v260)
+
+vc129 = Vector(24.4902, 29.1863, 0)
+vc130 = Vector(31.3475, 37.3585, 0)
+
+C129 = Part.Arc(v257, vc129, v260)
+C130 = Part.Arc(v258, vc130, v259)
+
+S62 = Part.Shape([L129, C129, L130, C130])
+W62 = Part.Wire(S62.Edges)
+F62 = Part.Face(W62)
+P62 = F62.extrude(Vector(0, 0, 2.0320))
+Part.show(P62)
+
+App.activeDocument().addObject("Part::Cut","Cut61")
+App.activeDocument().Cut61.Base = App.activeDocument().Cut60
+App.activeDocument().Cut61.Tool = App.activeDocument().Shape061
+App.ActiveDocument.recompute()
+
+App.ActiveDocument.addObject("Part::Cylinder","Cylinder1")
+App.ActiveDocument.Cylinder1.Radius=11.4300
+App.ActiveDocument.Cylinder1.Height=2.0320
+App.ActiveDocument.Cylinder1.Placement=Base.Placement(Base.Vector(0, 0, 5.0800), Base.Rotation(0,0,0,1))
+
+App.activeDocument().addObject("Part::Cut","Cut62")
+App.activeDocument().Cut62.Base = App.activeDocument().Cut61
+App.activeDocument().Cut62.Tool = App.activeDocument().Cylinder1
+App.ActiveDocument.recompute()
+
+App.ActiveDocument.addObject("Part::Cylinder","Cylinder2")
+App.ActiveDocument.Cylinder2.Radius=9.1440
+App.ActiveDocument.Cylinder2.Height=2.0320
+App.ActiveDocument.Cylinder2.Placement=Base.Placement(Base.Vector(0, 0, 5.0800), Base.Rotation(0,0,0,1))
+
+j = BOPTools.JoinFeatures.makeConnect(name = 'Connect')
+j.Objects = [App.ActiveDocument.Cut62, App.ActiveDocument.Cylinder2]
+j.Proxy.execute(j)
+j.purgeTouched()
+for obj in j.ViewObject.Proxy.claimChildren():
+	obj.ViewObject.hide()
+
+App.ActiveDocument.addObject("Part::Cylinder","Cylinder3")
+App.ActiveDocument.Cylinder3.Radius=6.8580
+App.ActiveDocument.Cylinder3.Height=2.0320
+App.ActiveDocument.Cylinder3.Placement=Base.Placement(Base.Vector(0, 0, 5.0800), Base.Rotation(0,0,0,1))
+
+App.activeDocument().addObject("Part::Cut","Cut63")
+App.activeDocument().Cut63.Base = App.activeDocument().Connect
+App.activeDocument().Cut63.Tool = App.activeDocument(). Cylinder3
+App.ActiveDocument.recompute()
+
+App.ActiveDocument.addObject("Part::Cylinder","Cylinder4")
+App.ActiveDocument.Cylinder4.Radius=4.5720
+App.ActiveDocument.Cylinder4.Height=2.0320
+App.ActiveDocument.Cylinder4.Placement=Base.Placement(Base.Vector(0, 0, 5.0800), Base.Rotation(0,0,0,1))
+
+j = BOPTools.JoinFeatures.makeConnect(name = 'Connect2')
+j.Objects = [App.ActiveDocument.Cut63, App.ActiveDocument.Cylinder4]
+j.Proxy.execute(j)
+j.purgeTouched()
+for obj in j.ViewObject.Proxy.claimChildren():
+	obj.ViewObject.hide()
+
+App.ActiveDocument.addObject("Part::Cylinder","Cylinder5")
+App.ActiveDocument.Cylinder5.Radius=2.2860
+App.ActiveDocument.Cylinder5.Height=2.0320
+App.ActiveDocument.Cylinder5.Placement=Base.Placement(Base.Vector(0, 0, 5.0800), Base.Rotation(0,0,0,1))
+
+App.activeDocument().addObject("Part::Cut","Cut64")
+App.activeDocument().Cut64.Base = App.activeDocument().Connect2
+App.activeDocument().Cut64.Tool = App.activeDocument().Cylinder5
+App.ActiveDocument.recompute()
+
+v261 = Vector(35.5200, 6.2631, 0)
+v262 = Vector(23.1841, 27.6297, 0)
+
+L131 = Part.LineSegment(v261, v262)
+
+vc131 = Vector(31.2358, 18.0340, 0)
+
+C131 = Part.Arc(v261, vc131, v262)
+
+S63 = Part.Shape([L131, C131])
+W63 = Part.Wire(S63.Edges)
+F63 = Part.Face(W63)
+P63 = F63.extrude(Vector(0, 0, 2.0320))
+Part.show(P63)
+
+App.activeDocument().addObject("Part::Cut","Cut65")
+App.activeDocument().Cut65.Base = App.activeDocument().Cut64
+App.activeDocument().Cut65.Tool = App.activeDocument().Shape062
+App.ActiveDocument.recompute()
+
+v263 = Vector(-23.1841, 27.6297, 0)
+v264 = Vector(-35.5200, 6.2631, 0)
+
+L132 = Part.LineSegment(v263, v264)
+
+vc132 = Vector(-31.2358, 18.0340, 0)
+
+C132 = Part.Arc(v263, vc132, v264)
+
+S64 = Part.Shape([L132, C132])
+W64 = Part.Wire(S64.Edges)
+F64 = Part.Face(W64)
+P64 = F64.extrude(Vector(0, 0, 2.0320))
+Part.show(P64)
+
+App.activeDocument().addObject("Part::Cut","Cut66")
+App.activeDocument().Cut66.Base = App.activeDocument().Cut65
+App.activeDocument().Cut66.Tool = App.activeDocument().Shape063
+App.ActiveDocument.recompute()
+
+v265 = Vector(29.4760, -17.0180, 0)
+v266 = Vector(26.3639, -11.6277, 0)
+v267 = Vector(23.2518, -17.0180, 0)
+
+L133 = Part.LineSegment(v265, v266)
+L134 = Part.LineSegment(v266, v267)
+L135 = Part.LineSegment(v267, v265)
+
+S65 = Part.Shape([L133, L134, L135])
+W65 = Part.Wire(S65.Edges)
+F65 = Part.Face(W65)
+P65 = F65.extrude(Vector(0, 0, 2.0320))
+Part.show(P65)
+
+App.activeDocument().addObject("Part::Cut","Cut67")
+App.activeDocument().Cut67.Base = App.activeDocument().Cut66
+App.activeDocument().Cut67.Tool = App.activeDocument().Shape064
+App.ActiveDocument.recompute()
+
+v268 = Vector(12.3360, -31.8608, 0)
+v269 = Vector(19.7323, -19.0500, 0)
+v270 = Vector(4.9396, -19.0500, 0)
+
+L136 = Part.LineSegment(v268, v269)
+L137 = Part.LineSegment(v269, v270)
+L138 = Part.LineSegment(v270, v268)
+
+S66 = Part.Shape([L136, L137, L138])
+W66 = Part.Wire(S66.Edges)
+F66 = Part.Face(W66)
+P66 = F66.extrude(Vector(0, 0, 2.0320))
+Part.show(P66)
+
+App.activeDocument().addObject("Part::Cut","Cut68")
+App.activeDocument().Cut68.Base = App.activeDocument().Cut67
+App.activeDocument().Cut68.Tool = App.activeDocument().Shape065
+App.ActiveDocument.recompute()
+
+v271 = Vector(-12.3360, -31.8608, 0)
+v272 = Vector(-19.7323, -19.0500, 0)
+v273 = Vector(-4.9396, -19.0500, 0)
+
+L139 = Part.LineSegment(v271, v272)
+L140 = Part.LineSegment(v272, v273)
+L141 = Part.LineSegment(v273, v271)
+
+S67 = Part.Shape([L139, L140, L141])
+W67 = Part.Wire(S67.Edges)
+F67 = Part.Face(W67)
+P67 = F67.extrude(Vector(0, 0, 2.0320))
+Part.show(P67)
+
+App.activeDocument().addObject("Part::Cut","Cut69")
+App.activeDocument().Cut69.Base = App.activeDocument().Cut68
+App.activeDocument().Cut69.Tool = App.activeDocument().Shape066
+App.ActiveDocument.recompute()
+
+v274 = Vector(-29.4760, -17.0180, 0)
+v275 = Vector(-26.3639, -11.6277, 0)
+v276 = Vector(-23.2518, -17.0180, 0)
+
+L142 = Part.LineSegment(v274, v275)
+L143 = Part.LineSegment(v275, v276)
+L144 = Part.LineSegment(v276, v274)
+
+S68 = Part.Shape([L142, L143, L144])
+W68 = Part.Wire(S68.Edges)
+F68 = Part.Face(W68)
+P68 = F68.extrude(Vector(0, 0, 2.0320))
+Part.show(P68)
+
+App.activeDocument().addObject("Part::Cut","Cut70")
+App.activeDocument().Cut70.Base = App.activeDocument().Cut69
+App.activeDocument().Cut70.Tool = App.activeDocument().Shape067
+App.ActiveDocument.recompute()
+
+v277 = Vector(0.0000, -14.5583, 0)
+v278 = Vector(1.4201, -17.0180, 0)
+v279 = Vector(-1.4201, -17.0180, 0)
+
+L145 = Part.LineSegment(v277, v278)
+L146 = Part.LineSegment(v278, v279)
+L147 = Part.LineSegment(v279, v277)
+
+S69 = Part.Shape([L145, L146, L147])
+W69 = Part.Wire(S69.Edges)
+F69 = Part.Face(W69)
+P69 = F69.extrude(Vector(0, 0, 2.0320))
+Part.show(P69)
+
+App.activeDocument().addObject("Part::Cut","Cut71")
+App.activeDocument().Cut71.Base = App.activeDocument().Cut70
+App.activeDocument().Cut71.Tool = App.activeDocument().Shape068
+App.ActiveDocument.recompute()
+
+v280 = Vector(31.8112, -16.9985, 0)
+v281 = Vector(35.7661, 4.6572, 0)
+v282 = Vector(27.5371, -9.5957, 0)
+
+L148 = Part.LineSegment(v280, v282)
+L149 = Part.LineSegment(v281, v282)
+
+vc133 = Vector(35.5200, -6.2631, 0)
+
+C133 = Part.Arc(v280, vc133, v281)
+
+S70 = Part.Shape([L148, L149, C133])
+W70 = Part.Wire(S70.Edges)
+F70 = Part.Face(W70)
+P70 = F70.extrude(Vector(0, 0, 2.0320))
+Part.show(P70)
+
+App.activeDocument().addObject("Part::Cut","Cut72")
+App.activeDocument().Cut72.Base = App.activeDocument().Cut71
+App.activeDocument().Cut72.Tool = App.activeDocument().Shape069
+App.ActiveDocument.recompute()
+
+v283 = Vector(13.8497, -33.3029, 0)
+v284 = Vector(30.6268, -19.0500, 0)
+v285 = Vector(22.0787, -19.0500, 0)
+
+L150 = Part.LineSegment(v283, v285)
+L151 = Part.LineSegment(v284, v285)
+
+vc134 = Vector(23.1841, -27.6297, 0)
+
+C134 = Part.Arc(v283, vc134, v284)
+
+S71 = Part.Shape([L150, L151, C134])
+W71 = Part.Wire(S71.Edges)
+F71 = Part.Face(W71)
+P71 = F71.extrude(Vector(0, 0, 2.0320))
+Part.show(P71)
+
+App.activeDocument().addObject("Part::Cut","Cut73")
+App.activeDocument().Cut73.Base = App.activeDocument().Cut72
+App.activeDocument().Cut73.Tool = App.activeDocument().Shape070
+App.ActiveDocument.recompute()
+
+v286 = Vector(-13.8497, -33.3029, 0)
+v287 = Vector(-30.6268, -19.0500, 0)
+v288 = Vector(-22.0787, -19.0500, 0)
+
+L152 = Part.LineSegment(v286, v288)
+L153 = Part.LineSegment(v287, v288)
+
+vc135 = Vector(-23.1841, -27.6297, 0)
+
+C135 = Part.Arc(v286, vc135, v287)
+
+S72 = Part.Shape([L152, L153, C135])
+W72 = Part.Wire(S72.Edges)
+F72 = Part.Face(W72)
+P72 = F72.extrude(Vector(0, 0, 2.0320))
+Part.show(P72)
+
+App.activeDocument().addObject("Part::Cut","Cut74")
+App.activeDocument().Cut74.Base = App.activeDocument().Cut73
+App.activeDocument().Cut74.Tool = App.activeDocument().Shape071
+App.ActiveDocument.recompute()
+
+v289 = Vector(-35.7661, 4.6572, 0)
+v290 = Vector(-31.8112, -16.9985, 0)
+v291 = Vector(-27.5371, -9.5957, 0)
+
+L154 = Part.LineSegment(v289, v291)
+L155 = Part.LineSegment(v290, v291)
+
+vc136 = Vector(-35.5200, -6.2631, 0)
+
+C136 = Part.Arc(v289, vc136, v290)
+
+S73 = Part.Shape([L154, L155, C136])
+W73 = Part.Wire(S73.Edges)
+F73 = Part.Face(W73)
+P73 = F73.extrude(Vector(0, 0, 2.0320))
+Part.show(P73)
+
+App.activeDocument().addObject("Part::Cut","Cut75")
+App.activeDocument().Cut75.Base = App.activeDocument().Cut74
+App.activeDocument().Cut75.Tool = App.activeDocument().Shape072
+App.ActiveDocument.recompute()
+
+v292 = Vector(-22.3863, 28.2799, 0)
+v293 = Vector(-1.1844, 36.0485, 0)
+v294 = Vector(-14.0280, 13.8029, 0)
+
+L156 = Part.LineSegment(v292, v294)
+L157 = Part.LineSegment(v293, v294)
+
+vc137 = Vector(-12.3360, 33.8928, 0)
+
+C137 = Part.Arc(v292, vc137, v293)
+
+S74 = Part.Shape([L156, L157, C137])
+W74 = Part.Wire(S74.Edges)
+F74 = Part.Face(W74)
+P74 = F74.extrude(Vector(0, 0, 2.0320))
+Part.show(P74)
+
+App.activeDocument().addObject("Part::Cut","Cut76")
+App.activeDocument().Cut76.Base = App.activeDocument().Cut75
+App.activeDocument().Cut76.Tool = App.activeDocument().Shape073
+App.ActiveDocument.recompute()
+
+v295 = Vector(1.1844, 36.0485, 0)
+v296 = Vector(22.3863, 28.2799, 0)
+v297 = Vector(14.0280, 13.8029, 0)
+
+L158 = Part.LineSegment(v295, v297)
+L159 = Part.LineSegment(v296, v297)
+
+vc138 = Vector(12.3360, 33.8928, 0)
+
+C138 = Part.Arc(v295, vc138, v296)
+
+S75 = Part.Shape([L158, L159, C138])
+W75 = Part.Wire(S75.Edges)
+F75 = Part.Face(W75)
+P75 = F75.extrude(Vector(0, 0, 2.0320))
+Part.show(P75)
+
+App.activeDocument().addObject("Part::Cut","Cut77")
+App.activeDocument().Cut77.Base = App.activeDocument().Cut76
+App.activeDocument().Cut77.Tool = App.activeDocument().Shape074
+App.ActiveDocument.recompute()
+
+v298 = Vector(0.0000, -10.4943, 0)
+v299 = Vector(-4.0648, -3.4538, 0)
+v300 = Vector(4.0648, -3.4538, 0)
+
+L160 = Part.LineSegment(v298, v299)
+L161 = Part.LineSegment(v298, v300)
+
+vc139 = Vector(0.0000, -5.3340, 0)
+
+C139 = Part.Arc(v299, vc139, v300)
+
+S76 = Part.Shape([L160, L161, C139])
+W76 = Part.Wire(S76.Edges)
+F76 = Part.Face(W76)
+P76 = F76.extrude(Vector(0, 0, 2.0320))
+Part.show(P76)
+
+App.activeDocument().addObject("Part::Cut","Cut78")
+App.activeDocument().Cut78.Base = App.activeDocument().Cut77
+App.activeDocument().Cut78.Tool = App.activeDocument().Shape075
+App.ActiveDocument.recompute()
+
+v301 = Vector(22.5975, 24.5817, 0)
+v302 = Vector(33.7603, 5.2471, 0)
+v303 = Vector(26.3639, -7.5637, 0)
+v304 = Vector(15.2011, 11.7709, 0)
+
+L162 = Part.LineSegment(v301, v302)
+L163 = Part.LineSegment(v302, v303)
+L164 = Part.LineSegment(v303, v304)
+L165 = Part.LineSegment(v304, v301)
+
+S77 = Part.Shape([L162, L163, L164, L165])
+W77 = Part.Wire(S77.Edges)
+F77 = Part.Face(W77)
+P77 = F77.extrude(Vector(0, 0, 2.0320))
+Part.show(P77)
+
+App.activeDocument().addObject("Part::Cut","Cut79")
+App.activeDocument().Cut79.Base = App.activeDocument().Cut78
+App.activeDocument().Cut79.Tool = App.activeDocument().Shape076
+App.ActiveDocument.recompute()
+
+v305 = Vector(-22.5975, 24.5817, 0)
+v306 = Vector(-33.7603, 5.2471, 0)
+v307 = Vector(-26.3639, -7.5637, 0)
+v308 = Vector(-15.2011, 11.7709, 0)
+
+L166 = Part.LineSegment(v305, v306)
+L167 = Part.LineSegment(v306, v307)
+L168 = Part.LineSegment(v307, v308)
+L169 = Part.LineSegment(v308, v305)
+
+S78 = Part.Shape([L166, L167, L168, L169])
+W78 = Part.Wire(S78.Edges)
+F78 = Part.Face(W78)
+P78 = F78.extrude(Vector(0, 0, 2.0320))
+Part.show(P78)
+
+App.activeDocument().addObject("Part::Cut","Cut80")
+App.activeDocument().Cut80.Base = App.activeDocument().Cut79
+App.activeDocument().Cut80.Tool = App.activeDocument().Shape077
+App.ActiveDocument.recompute()
+
+v309 = Vector(11.3590, -34.2326, 0)
+v310 = Vector(-11.3590, -34.2326, 0)
+v311 = Vector(2.5933, -19.0500, 0)
+v312 = Vector(-2.5933, -19.0500, 0)
+
+L170 = Part.LineSegment(v309, v310)
+L171 = Part.LineSegment(v310, v311)
+L172 = Part.LineSegment(v311, v312)
+
+vc140 = Vector(0.0000, -36.0680, 0)
+
+C140 = Part.Arc(v309, vc140, v310)
+
+S79 = Part.Shape([L170, L171, L172, C140])
+W79 = Part.Wire(S79.Edges)
+F79 = Part.Face(W79)
+P79 = F79.extrude(Vector(0, 0, 2.0320))
+Part.show(P79)
+
+App.activeDocument().addObject("Part::Cut","Cut81")
+App.activeDocument().Cut81.Base = App.activeDocument().Cut80
+App.activeDocument().Cut81.Tool = App.activeDocument().Shape078
+App.ActiveDocument.recompute()
+
+v313 = Vector(-14.0280, 9.7389, 0)
+v314 = Vector(-1.1732, -12.5263, 0)
+v315 = Vector(-3.7665, -17.0180, 0)
+v316 = Vector(-20.9055, -17.0180, 0)
+v317 = Vector(-25.1908, -9.5957, 0)
+
+L173 = Part.LineSegment(v313, v314)
+L174 = Part.LineSegment(v314, v315)
+L175 = Part.LineSegment(v315, v316)
+L176 = Part.LineSegment(v316, v317)
+L177 = Part.LineSegment(v317, v313)
+
+S80 = Part.Shape([L173, L174, L175, L176, L177])
+W80 = Part.Wire(S80.Edges)
+F80 = Part.Face(W80)
+P80 = F80.extrude(Vector(0, 0, 2.0320))
+Part.show(P80)
+
+App.activeDocument().addObject("Part::Cut","Cut82")
+App.activeDocument().Cut82.Base = App.activeDocument().Cut81
+App.activeDocument().Cut82.Tool = App.activeDocument().Shape079
+App.ActiveDocument.recompute()
+
+v318 = Vector(14.0280, 9.7389, 0)
+v319 = Vector(25.1908, -9.5957, 0)
+v320 = Vector(20.9055, -17.0180, 0)
+v321 = Vector(3.7665, -17.0180, 0)
+v322 = Vector(1.1732, -12.5263, 0)
+
+L178 = Part.LineSegment(v318, v319)
+L179 = Part.LineSegment(v319, v320)
+L180 = Part.LineSegment(v320, v321)
+L181 = Part.LineSegment(v321, v322)
+L182 = Part.LineSegment(v322, v318)
+
+S81 = Part.Shape([L178, L179, L180, L181, L182])
+W81 = Part.Wire(S81.Edges)
+F81 = Part.Face(W81)
+P81 = F81.extrude(Vector(0, 0, 2.0320))
+Part.show(P81)
+
+App.activeDocument().addObject("Part::Cut","Cut83")
+App.activeDocument().Cut83.Base = App.activeDocument().Cut82
+App.activeDocument().Cut83.Tool = App.activeDocument().Shape080
+App.ActiveDocument.recompute()
+
+v323 = Vector(0.0000, 34.0360, 0)
+v324 = Vector(12.8548, 11.7709, 0)
+v325 = Vector(-12.8548, 11.7709, 0)
+v326 = Vector(5.0235, -1.7933, 0)
+v327 = Vector(-5.0235, -1.7933, 0)
+
+L183 = Part.LineSegment(v323, v324)
+L184 = Part.LineSegment(v324, v326)
+L185 = Part.LineSegment(v323, v325)
+L186 = Part.LineSegment(v325, v327)
+
+vc141 = Vector(0.0000, 5.3340, 0)
+
+C141 = Part.Arc(v326, vc141, v327)
+
+S82 = Part.Shape([L184, L183, L185, L186, C141])
+W82 = Part.Wire(S82.Edges)
+F82 = Part.Face(W82)
+P82 = F82.extrude(Vector(0, 0, 2.0320))
+Part.show(P82)
+
+App.activeDocument().addObject("Part::Cut","Cut84")
+App.activeDocument().Cut84.Base = App.activeDocument().Cut83
+App.activeDocument().Cut84.Tool = App.activeDocument().Shape081
+App.ActiveDocument.recompute()
+
+App.ActiveDocument.addObject("Part::Cylinder","Cylinder6")
+App.ActiveDocument.Cylinder6.Radius=3.3020
+App.ActiveDocument.Cylinder6.Height=2.0320
+App.ActiveDocument.Cylinder6.Placement=Base.Placement(Base.Vector(0, 0, 0), Base.Rotation(0,0,0,1))
+
+App.activeDocument().addObject("Part::Cut","Cut85")
+App.activeDocument().Cut85.Base = App.activeDocument().Cut84
+App.activeDocument().Cut85.Tool = App.activeDocument().Cylinder6
+App.ActiveDocument.recompute()
+
+Gui.activeDocument().activeView().viewIsometric()
+Gui.SendMsgToActiveView("ViewFit")
